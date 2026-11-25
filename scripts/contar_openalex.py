@@ -1,192 +1,94 @@
 #!/usr/bin/env python3
-"""Coleta o snapshot do arXiv cs.SE (por mês de submissão) para o matcher local.
+"""Conta, no OpenAlex, quantos registros cada família recupera (estimativa de volume).
 
-A API do arXiv aplica stemming e não respeita o curinga "*" (elicit*, elicit e
-elicitation devolvem o mesmo total). Por isso, como o metodologia-tcc faz com a
-ACL Anthology, baixamos todos os registros da categoria no período e aplicamos
-as strings localmente (scripts/aplicar_strings.py).
+O OpenAlex é usado aqui como aproximação de uma base multidisciplinar, como a
+Scopus: aceita busca booleana em título e resumo, mas não aceita curinga (o
+'*' é removido e vale o stemming da própria base). Só as contagens são
+coletadas; os registros não são baixados, por causa do limite diário de uso.
 
-Uso: python3 scripts/coletar_arxiv.py --inicio 2021-01 --fim 2026-11
+Uso: python3 scripts/contar_openalex.py [--desde 2021-01-01]
 """
 
 from __future__ import annotations
 
 import argparse
-import calendar
 import datetime as dt
-import hashlib
 import json
 import sys
 import time
 import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
-API = "https://export.arxiv.org/api/query"
-NS = {
-    "a": "http://www.w3.org/2005/Atom",
-    "arxiv": "http://arxiv.org/schemas/atom",
-    "os": "http://a9.com/-/spec/opensearch/1.1/",
-}
+sys.path.insert(0, str(RAIZ))
+from src.busca import carregar_config, query_openalex, query_openalex_uniao  # noqa: E402
+
+API = "https://api.openalex.org/works"
 AGENTE = "piloto-revisao-multivocal/0.1 (pesquisa academica)"
-POR_PAGINA = 1000
-PAUSA = 3.2
 
 
-def agora() -> str:
-    return dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
-
-
-def meses(inicio: str, fim: str):
-    a, m = map(int, inicio.split("-"))
-    af, mf = map(int, fim.split("-"))
-    while (a, m) <= (af, mf):
-        yield a, m
-        m += 1
-        if m == 13:
-            a, m = a + 1, 1
-
-
-def query_mes(categoria: str, ano: int, mes: int) -> str:
-    ultimo = calendar.monthrange(ano, mes)[1]
-    return f"cat:{categoria} AND submittedDate:[{ano:04d}{mes:02d}010000 TO {ano:04d}{mes:02d}{ultimo:02d}2359]"
-
-
-def chamar(query: str, inicio: int, n: int) -> str:
+def contar(query: str, desde: str, extra: str = "") -> tuple[int | None, dict, str | None]:
     params = urllib.parse.urlencode({
-        "search_query": query, "start": inicio, "max_results": n,
-        "sortBy": "submittedDate", "sortOrder": "ascending",
+        "filter": f"title_and_abstract.search:{query},from_publication_date:{desde}" + (f",{extra}" if extra else ""),
+        "per-page": 1,
+        "select": "id",
     })
     req = urllib.request.Request(f"{API}?{params}", headers={"User-Agent": AGENTE})
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        return resp.read().decode("utf-8")
-
-
-def _txt(el) -> str | None:
-    return " ".join(el.text.split()) if el is not None and el.text else None
-
-
-def interpretar(xml: str) -> tuple[int, list[dict]]:
-    raiz = ET.fromstring(xml)
-    total = int(raiz.find("os:totalResults", NS).text)
-    registros = []
-    for e in raiz.findall("a:entry", NS):
-        eid = e.find("a:id", NS).text
-        if "api/errors" in eid:
-            raise RuntimeError("erro da API: " + (_txt(e.find("a:summary", NS)) or ""))
-        arxiv_id = eid.rsplit("/abs/", 1)[-1]
-        base_id = arxiv_id.rsplit("v", 1)[0] if "v" in arxiv_id.split("/")[-1] else arxiv_id
-        prim = e.find("arxiv:primary_category", NS)
-        registros.append({
-            "id": f"arxiv:{base_id}",
-            "arxiv_id": base_id,
-            "versao": arxiv_id,
-            "title": _txt(e.find("a:title", NS)),
-            "abstract": _txt(e.find("a:summary", NS)),
-            "published": (e.find("a:published", NS).text or "")[:10],
-            "updated": (e.find("a:updated", NS).text or "")[:10],
-            "authors": [_txt(a.find("a:name", NS)) for a in e.findall("a:author", NS)],
-            "primary_category": prim.get("term") if prim is not None else None,
-            "categories": [c.get("term") for c in e.findall("a:category", NS)],
-            "doi": _txt(e.find("arxiv:doi", NS)),
-            "journal_ref": _txt(e.find("arxiv:journal_ref", NS)),
-            "comment": _txt(e.find("arxiv:comment", NS)),
-        })
-    return total, registros
-
-
-def coletar_mes(query: str, log) -> tuple[int, list[dict], str]:
-    inicio, total, coletados = 0, None, []
-    while True:
-        for tentativa in range(7):
-            try:
-                total_pag, regs = interpretar(chamar(query, inicio, POR_PAGINA))
-                if total_pag > inicio and not regs:
-                    raise RuntimeError("página vazia com resultados pendentes")
-                break
-            except Exception as exc:  # rede, XML, erro da API
-                espera = 5 * 2 ** tentativa
-                log(f"  tentativa {tentativa + 1} falhou ({exc}); nova tentativa em {espera}s")
-                time.sleep(espera)
-        else:
-            return total or 0, coletados, "incompleto"
-        total = total_pag
-        coletados += regs
-        inicio += len(regs)
-        time.sleep(PAUSA)
-        if inicio >= total or not regs:
-            return total, coletados, "completo"
+    for tentativa in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                corpo = json.loads(resp.read().decode("utf-8"))
+                limites = {k: v for k, v in resp.headers.items() if k.lower().startswith("x-ratelimit")}
+                return corpo["meta"]["count"], limites, None
+        except Exception as exc:
+            erro = str(exc)
+            time.sleep(5 * (tentativa + 1))
+    return None, {}, erro
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--categoria", default="cs.SE")
-    ap.add_argument("--inicio", default="2021-01")
-    ap.add_argument("--fim", default="2026-11")
+    ap.add_argument("--desde", default="2021-01-01")
+    ap.add_argument("--config", default=None, help="YAML de strings (padrão: config/search_queries.yaml)")
+    ap.add_argument("--filtro", default="", help="filtro extra do OpenAlex, ex.: primary_topic.field.id:17 (Computer Science)")
     args = ap.parse_args()
+    cfg = carregar_config(RAIZ / args.config) if args.config else carregar_config()
+    inicio = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
 
-    pasta_meses = RAIZ / "data" / "raw" / "arxiv" / "meses"
-    pasta_meses.mkdir(parents=True, exist_ok=True)
-    estado_path = RAIZ / "data" / "raw" / "arxiv" / "estado_coleta.json"
-    estado = json.loads(estado_path.read_text()) if estado_path.exists() else {}
-    iniciado = agora()
+    consultas = {"DOMINIO": query_openalex(cfg, None)}
+    for fam in cfg.familias.values():
+        consultas[fam.id] = query_openalex(cfg, fam)
+    consultas["UNIAO"] = query_openalex_uniao(cfg)
 
-    def log(msg: str) -> None:
-        print(msg, flush=True)
-
-    for ano, mes in meses(args.inicio, args.fim):
-        chave = f"{ano:04d}-{mes:02d}"
-        if estado.get(chave, {}).get("status") == "completo":
-            continue
-        query = query_mes(args.categoria, ano, mes)
-        total, regs, status = coletar_mes(query, log)
-        with open(pasta_meses / f"{chave}.jsonl", "w", encoding="utf-8") as fh:
-            for r in regs:
-                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-        estado[chave] = {"query": query, "total_informado": total, "coletados": len(regs), "status": status}
-        estado_path.write_text(json.dumps(estado, indent=2, ensure_ascii=False))
-        log(f"{chave}: {len(regs)}/{total} ({status})")
-
-    # Snapshot único, sem duplicatas
-    vistos, snapshot = set(), []
-    for chave in sorted(estado):
-        caminho = pasta_meses / f"{chave}.jsonl"
-        for linha in caminho.read_text(encoding="utf-8").splitlines():
-            r = json.loads(linha)
-            if r["id"] not in vistos:
-                vistos.add(r["id"])
-                snapshot.append(r)
-    saida = RAIZ / "data" / "raw" / "arxiv" / f"{args.categoria}_{args.inicio}_{args.fim}.jsonl"
-    with open(saida, "w", encoding="utf-8") as fh:
-        for r in snapshot:
-            fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-    sha = hashlib.sha256(saida.read_bytes()).hexdigest()
+    resultados, ultimo_limite = {}, {}
+    for chave, q in consultas.items():
+        n, limites, erro = contar(q, args.desde, args.filtro)
+        ultimo_limite = limites or ultimo_limite
+        resultados[chave] = {"executed_query": q, "count": n, "error": erro}
+        rotulo = cfg.familias[chave].label if chave in cfg.familias else chave
+        print(f"{chave:<14} {rotulo:<14} {n if n is not None else 'ERRO: ' + str(erro)}", flush=True)
+        time.sleep(1.5)
 
     manifesto = {
-        "source": "arxiv",
+        "source": "openalex",
         "endpoint": API,
-        "executed_at": iniciado,
-        "finished_at": agora(),
-        "search_mode": "snapshot da categoria + matcher local",
-        "motivo": "a API aplica stemming e ignora o curinga '*'; as strings são aplicadas localmente",
-        "categoria": args.categoria,
-        "periodo": {"inicio": args.inicio, "fim": args.fim, "campo_data": "submittedDate (versão 1)"},
-        "por_mes": estado,
-        "total_informado_soma": sum(v["total_informado"] for v in estado.values()),
-        "coletados_soma": sum(v["coletados"] for v in estado.values()),
-        "meses_incompletos": [k for k, v in estado.items() if v["status"] != "completo"],
-        "registros_unicos": len(snapshot),
-        "snapshot": str(saida.relative_to(RAIZ)),
-        "snapshot_sha256": sha,
+        "executed_at": inicio,
+        "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "query_version": cfg.version,
+        "config": args.config or "config/search_queries.yaml",
+        "query_fingerprint": cfg.fingerprint(),
+        "search_fields": ["title", "abstract"],
+        "adapter": "title_and_abstract.search; '*' removido (a base usa stemming e não aceita curinga)",
+        "temporal_filter": f"from_publication_date:{args.desde}",
+        "filtro_extra": args.filtro or None,
+        "observacao": "só contagens; os registros não foram baixados",
+        "resultados": resultados,
+        "rate_limit_final": ultimo_limite,
     }
-    destino = RAIZ / "data" / "manifests" / "arxiv" / f"{dt.datetime.now().strftime('%Y-%m-%dT%H%M%S')}-coleta.json"
+    destino = RAIZ / "data" / "manifests" / "openalex" / f"{dt.datetime.now().strftime('%Y-%m-%dT%H%M%S')}-contagens.json"
     destino.write_text(json.dumps(manifesto, indent=2, ensure_ascii=False))
-    log(f"Snapshot: {saida} ({len(snapshot)} registros); manifesto: {destino}")
-    if manifesto["meses_incompletos"]:
-        log("ATENÇÃO: meses incompletos: " + ", ".join(manifesto["meses_incompletos"]))
-        sys.exit(2)
+    print(f"Manifesto: {destino}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,78 @@
+{
+  "source": "openalex",
+  "endpoint": "https://api.openalex.org/works",
+  "executed_at": "2026-11-17T17:41:10+00:00",
+  "finished_at": "2026-11-17T17:41:39+00:00",
+  "query_version": 1,
+  "query_fingerprint": "d30663d4a8db82854ef45ec334046f690a768e719f86e7b733f04260d2d8d03c",
+  "search_fields": [
+    "title",
+    "abstract"
+  ],
+  "adapter": "title_and_abstract.search; '*' removido (a base usa stemming e não aceita curinga)",
+  "temporal_filter": "from_publication_date:2021-01-01",
+  "observacao": "só contagens; os registros não foram baixados",
+  "resultados": {
+    "IA": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\")",
+      "count": 1911796,
+      "error": null
+    },
+    "IA_E_SOFTWARE": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories))",
+      "count": 241557,
+      "error": null
+    },
+    "REQ": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (\"requirement engineering\" OR \"requirement elicitation\" OR \"requirement analysis\" OR \"requirement specification\" OR \"requirement validation\" OR \"requirement management\" OR \"requirement traceability\" OR \"requirement classification\" OR \"requirement document\" OR \"software requirement\" OR \"functional requirement\" OR \"non-functional requirement\" OR (\"user story\" OR \"user stories\") OR \"acceptance criteria\" OR backlog OR \"app review\")",
+      "count": 2392,
+      "error": null
+    },
+    "ARQ": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND ((\"software architecture\" OR \"software architect\") OR \"architectural decision\" OR \"architecture decision\" OR \"architectural design\" OR \"architectural knowledge\" OR \"architectural pattern\" OR \"architecture documentation\" OR \"architecture recovery\" OR \"architecture erosion\" OR \"microservice architecture\" OR \"design decision\" OR \"quality attribute\")",
+      "count": 3127,
+      "error": null
+    },
+    "PRJ": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (\"software design\" OR \"detailed design\" OR \"design pattern\" OR \"object-oriented design\" OR UML OR \"class diagram\" OR \"sequence diagram\" OR \"domain model\" OR \"model-driven\" OR \"software model\" OR \"API design\" OR \"database design\" OR \"UI design\" OR \"GUI design\" OR \"user interface design\" OR (\"UI prototype\" OR \"UI prototyping\") OR (\"GUI prototype\" OR \"GUI prototyping\"))",
+      "count": 2532,
+      "error": null
+    },
+    "CON": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (\"code generation\" OR \"code completion\" OR \"program synthesis\" OR \"pair programming\" OR \"code review\" OR \"pull request\" OR \"merge conflict\" OR \"commit message\" OR \"coding practice\" OR \"programming practice\" OR \"secure coding\" OR \"code quality\" OR \"static analysis\" OR \"vibe coding\")",
+      "count": 14521,
+      "error": null
+    },
+    "TES": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (\"software testing\" OR \"test generation\" OR \"test case\" OR \"unit test\" OR \"test suite\" OR \"test automation\" OR \"automated testing\" OR \"test oracle\" OR \"regression test\" OR \"mutation test\" OR (fuzzing OR fuzzer) OR \"GUI test\" OR \"acceptance test\" OR \"end-to-end test\" OR \"property-based test\" OR \"test-driven\" OR \"vulnerability detection\")",
+      "count": 5158,
+      "error": null
+    },
+    "OPE": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (DevOps OR \"continuous integration\" OR \"continuous delivery\" OR \"continuous deployment\" OR \"CI/CD\" OR \"deployment pipeline\" OR \"infrastructure as code\" OR \"infrastructure-as-code\" OR Kubernetes OR Dockerfile OR misconfiguration OR \"incident management\" OR \"incident response\" OR \"root cause analysis\" OR \"log analysis\" OR (\"log parsing\" OR \"log parser\") OR AIOps OR observability OR \"site reliability\")",
+      "count": 5816,
+      "error": null
+    },
+    "MAN": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (\"software maintenance\" OR \"software evolution\" OR \"program repair\" OR \"bug fix\" OR \"bug report\" OR \"bug localization\" OR \"fault localization\" OR \"issue resolution\" OR \"issue report\" OR (refactoring OR refactor) OR \"code smell\" OR \"technical debt\" OR \"code translation\" OR \"code migration\" OR \"legacy code\" OR \"legacy system\" OR \"software modernization\" OR \"program comprehension\" OR \"code comprehension\" OR (\"code summarization\" OR \"code summary\") OR \"code comment\" OR \"patch generation\")",
+      "count": 5329,
+      "error": null
+    },
+    "UNIAO": {
+      "executed_query": "(\"large language model\" OR \"language model\" OR LLM OR \"generative AI\" OR GenAI OR \"generative artificial intelligence\" OR \"foundation model\" OR GPT OR ChatGPT OR Copilot OR Codex OR \"AI assistant\" OR \"AI-assisted\" OR \"AI-powered\" OR \"AI-generated\" OR (\"AI pair programming\" OR \"AI pair programmer\") OR \"coding assistant\" OR \"programming assistant\" OR \"coding agent\" OR \"AI agent\" OR agentic OR \"vibe coding\") AND (software OR developer OR programmer OR programming OR code OR coding OR \"pull request\" OR (repository OR repositories)) AND (\"requirement engineering\" OR \"requirement elicitation\" OR \"requirement analysis\" OR \"requirement specification\" OR \"requirement validation\" OR \"requirement management\" OR \"requirement traceability\" OR \"requirement classification\" OR \"requirement document\" OR \"software requirement\" OR \"functional requirement\" OR \"non-functional requirement\" OR (\"user story\" OR \"user stories\") OR \"acceptance criteria\" OR backlog OR \"app review\" OR (\"software architecture\" OR \"software architect\") OR \"architectural decision\" OR \"architecture decision\" OR \"architectural design\" OR \"architectural knowledge\" OR \"architectural pattern\" OR \"architecture documentation\" OR \"architecture recovery\" OR \"architecture erosion\" OR \"microservice architecture\" OR \"design decision\" OR \"quality attribute\" OR \"software design\" OR \"detailed design\" OR \"design pattern\" OR \"object-oriented design\" OR UML OR \"class diagram\" OR \"sequence diagram\" OR \"domain model\" OR \"model-driven\" OR \"software model\" OR \"API design\" OR \"database design\" OR \"UI design\" OR \"GUI design\" OR \"user interface design\" OR (\"UI prototype\" OR \"UI prototyping\") OR (\"GUI prototype\" OR \"GUI prototyping\") OR \"code generation\" OR \"code completion\" OR \"program synthesis\" OR \"pair programming\" OR \"code review\" OR \"pull request\" OR \"merge conflict\" OR \"commit message\" OR \"coding practice\" OR \"programming practice\" OR \"secure coding\" OR \"code quality\" OR \"static analysis\" OR \"vibe coding\" OR \"software testing\" OR \"test generation\" OR \"test case\" OR \"unit test\" OR \"test suite\" OR \"test automation\" OR \"automated testing\" OR \"test oracle\" OR \"regression test\" OR \"mutation test\" OR (fuzzing OR fuzzer) OR \"GUI test\" OR \"acceptance test\" OR \"end-to-end test\" OR \"property-based test\" OR \"test-driven\" OR \"vulnerability detection\" OR DevOps OR \"continuous integration\" OR \"continuous delivery\" OR \"continuous deployment\" OR \"CI/CD\" OR \"deployment pipeline\" OR \"infrastructure as code\" OR \"infrastructure-as-code\" OR Kubernetes OR Dockerfile OR misconfiguration OR \"incident management\" OR \"incident response\" OR \"root cause analysis\" OR \"log analysis\" OR (\"log parsing\" OR \"log parser\") OR AIOps OR observability OR \"site reliability\" OR \"software maintenance\" OR \"software evolution\" OR \"program repair\" OR \"bug fix\" OR \"bug report\" OR \"bug localization\" OR \"fault localization\" OR \"issue resolution\" OR \"issue report\" OR (refactoring OR refactor) OR \"code smell\" OR \"technical debt\" OR \"code translation\" OR \"code migration\" OR \"legacy code\" OR \"legacy system\" OR \"software modernization\" OR \"program comprehension\" OR \"code comprehension\" OR (\"code summarization\" OR \"code summary\") OR \"code comment\" OR \"patch generation\")",
+      "count": 27333,
+      "error": null
+    }
+  },
+  "rate_limit_final": {
+    "X-RateLimit-Cost-USD": "0.001",
+    "X-RateLimit-Credits-Used": "10",
+    "X-RateLimit-Limit": "1000",
+    "X-RateLimit-Limit-USD": "0.1",
+    "X-RateLimit-Onetime-Remaining": "0",
+    "X-RateLimit-Prepaid-Remaining-USD": "0",
+    "X-RateLimit-Remaining": "857",
+    "X-RateLimit-Remaining-USD": "0.0857",
+    "X-RateLimit-Reset": "22703"
+  }
+}

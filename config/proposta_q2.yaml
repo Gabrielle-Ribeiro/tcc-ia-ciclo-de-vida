@@ -1,0 +1,203 @@
+# PROPOSTA de versão 2 das strings (não aprovada; gerada no piloto de 17/11/2026).
+# Só vale depois de aprovada pelas pessoas da equipe e registrada (novo hash).
+#
+# Mudanças em relação à v1, com a evidência em data/refinamento/ablacao_q1.json:
+#   1. sai o bloco de software; o contexto vem do filtro de área de cada base
+#      (arXiv: cs.SE; Scopus: SUBJAREA(COMP); OpenAlex: campo Computer Science).
+#      No arXiv, o bloco derrubava estudos sem a palavra "software", como
+#      "From Assistance to Agency... CI/CD Pipelines";
+#   2. entram em CON "coding agent*", "AI coding", "coding tool*", "context file*"
+#      e "AGENTS.md", e em TES "differential test*": todos aparecem literalmente
+#      em estudos do conjunto de validação que a v1 não recuperava.
+# Sensibilidade no conjunto de validação: v1 = 0,47 (8/17); v2 = 0,82 (14/17).
+#
+# Estrutura de cada família:  (IA) AND (ETAPA), com o filtro de área da base.
+
+version: 2
+
+domain:
+  ia:
+    label: IA generativa
+    terms:
+      - "large language model*"
+      - "language model*"
+      - "LLM*"
+      - "generative AI"
+      - "GenAI"
+      - "generative artificial intelligence"
+      - "foundation model*"
+      - "GPT*"
+      - "ChatGPT"
+      - "Copilot"
+      - "Codex"
+      - "AI assistant*"
+      - "AI-assisted"
+      - "AI-powered"
+      - "AI-generated"
+      - "AI pair programm*"
+      - "coding assistant*"
+      - "programming assistant*"
+      - "coding agent*"
+      - "AI agent*"
+      - "agentic"
+      - "vibe coding"
+
+families:
+
+  REQ:
+    stage: requirements
+    label: Requisitos
+    terms:
+      - "requirement* engineering"
+      - "requirement* elicitation"
+      - "requirement* analysis"
+      - "requirement* specification*"
+      - "requirement* validation"
+      - "requirement* management"
+      - "requirement* traceability"
+      - "requirement* classification"
+      - "requirement* document*"
+      - "software requirement*"
+      - "functional requirement*"
+      - "non-functional requirement*"
+      - "user stor*"
+      - "acceptance criteria"
+      - "backlog*"
+      - "app review*"
+
+  ARQ:
+    stage: architecture
+    label: Arquitetura
+    terms:
+      - "software architect*"
+      - "architectural decision*"
+      - "architecture decision*"
+      - "architectural design*"
+      - "architectural knowledge"
+      - "architectural pattern*"
+      - "architecture documentation"
+      - "architecture recovery"
+      - "architecture erosion"
+      - "microservice architecture*"
+      - "design decision*"
+      - "quality attribute*"
+
+  PRJ:
+    stage: design
+    label: Projeto
+    terms:
+      - "software design"
+      - "detailed design"
+      - "design pattern*"
+      - "object-oriented design"
+      - "UML"
+      - "class diagram*"
+      - "sequence diagram*"
+      - "domain model*"
+      - "model-driven"
+      - "software model*"
+      - "API design"
+      - "database design"
+      - "UI design"
+      - "GUI design"
+      - "user interface design"
+      - "UI prototyp*"
+      - "GUI prototyp*"
+
+  CON:
+    stage: construction
+    label: Construção
+    terms:
+      - "code generation"
+      - "code completion"
+      - "program synthesis"
+      - "pair programming"
+      - "code review*"
+      - "pull request*"
+      - "merge conflict*"
+      - "commit message*"
+      - "coding practice*"
+      - "programming practice*"
+      - "secure coding"
+      - "code quality"
+      - "static analysis"
+      - "vibe coding"
+      - "coding agent*"
+      - "AI coding"
+      - "coding tool*"
+      - "context file*"
+      - "AGENTS.md"
+
+  TES:
+    stage: testing
+    label: Teste
+    terms:
+      - "software testing"
+      - "test generation"
+      - "test case*"
+      - "unit test*"
+      - "test suite*"
+      - "test automation"
+      - "automated testing"
+      - "test oracle*"
+      - "regression test*"
+      - "mutation test*"
+      - "fuzz*"
+      - "GUI test*"
+      - "acceptance test*"
+      - "end-to-end test*"
+      - "property-based test*"
+      - "test-driven"
+      - "vulnerability detection"
+      - "differential test*"
+
+  OPE:
+    stage: operations
+    label: Operações
+    terms:
+      - "DevOps"
+      - "continuous integration"
+      - "continuous delivery"
+      - "continuous deployment"
+      - "CI/CD"
+      - "deployment pipeline*"
+      - "infrastructure as code"
+      - "infrastructure-as-code"
+      - "Kubernetes"
+      - "Dockerfile*"
+      - "misconfiguration*"
+      - "incident management"
+      - "incident response"
+      - "root cause analysis"
+      - "log analysis"
+      - "log pars*"
+      - "AIOps"
+      - "observability"
+      - "site reliability"
+
+  MAN:
+    stage: maintenance
+    label: Manutenção
+    terms:
+      - "software maintenance"
+      - "software evolution"
+      - "program repair"
+      - "bug fix*"
+      - "bug report*"
+      - "bug localization"
+      - "fault localization"
+      - "issue resolution"
+      - "issue report*"
+      - "refactor*"
+      - "code smell*"
+      - "technical debt"
+      - "code translation"
+      - "code migration"
+      - "legacy code"
+      - "legacy system*"
+      - "software modernization"
+      - "program comprehension"
+      - "code comprehension"
+      - "code summar*"
+      - "code comment*"
+      - "patch generation"

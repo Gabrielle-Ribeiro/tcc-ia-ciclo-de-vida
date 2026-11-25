@@ -1,0 +1,162 @@
+{
+  "evidencia": {
+    "CON": "coding agent (Wink; Operationalizing Ethics...), AI coding (Operationalizing...; Accountable Agents...; A Dataset of Agentic AI Coding Tool Configurations), coding tool e context file (A Dataset...), AGENTS.md (Operationalizing Ethics...)",
+    "TES": "differential testing (LLMs in the Heart of Differential Testing...)",
+    "TRV": "governance (From Assistance to Agency...; Operationalizing...; Accountable Agents...), terms of service (Accountable Agents...); AI polic* e contribution guideline* vêm dos títulos de Hora, Robbes e Zacchiroli (2026) e de Hora e Robbes (2026), do conjunto de desenvolvimento",
+    "software": "From Assistance to Agency... casa CI/CD (OPE), mas não tem termo do bloco de software"
+  },
+  "variantes": [
+    {
+      "variante": "v1: IA ∧ software ∧ etapa",
+      "query_fingerprint": "d30663d4a8db82854ef45ec334046f690a768e719f86e7b733f04260d2d8d03c",
+      "volume_por_familia": {
+        "REQ": 306,
+        "ARQ": 229,
+        "PRJ": 211,
+        "CON": 2828,
+        "TES": 1551,
+        "OPE": 279,
+        "MAN": 1464
+      },
+      "uniao": 5256,
+      "validacao_recuperados": 8,
+      "validacao_no_snapshot": 17,
+      "sensibilidade": 0.471,
+      "nao_recuperados": [
+        "Wink: Recovering from Misbehaviors in Coding Agents",
+        "From Assistance to Agency: Rethinking Autonomy and Control in CI/CD Pipelines",
+        "Operationalizing Ethics for AI Agents: How Developers Encode Values into Repository Context Files",
+        "Accountable Agents in Software Engineering: An Analysis of Terms of Service and a Research Roadmap",
+        "A Dataset of Agentic AI Coding Tool Configurations",
+        "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+        "Model-Assisted and Human-Guided: Perceptions and Practices of Software Professionals Using LLMs for Coding",
+        "The Future of Generative AI in Software Engineering: A Vision from Industry and Academia in the European GENIUS Project",
+        "LLMs in the Heart of Differential Testing: A Case Study on a Medical Rule Engine"
+      ]
+    },
+    {
+      "variante": "sem o bloco de software",
+      "query_fingerprint": "5f430eeb8cb9e82f955e4ce9b724e1c4fd2e044fea6368e1544c3eca563bbff9",
+      "volume_por_familia": {
+        "REQ": 390,
+        "ARQ": 254,
+        "PRJ": 244,
+        "CON": 2854,
+        "TES": 1752,
+        "OPE": 390,
+        "MAN": 1525
+      },
+      "uniao": 5739,
+      "validacao_recuperados": 10,
+      "validacao_no_snapshot": 17,
+      "sensibilidade": 0.588,
+      "nao_recuperados": [
+        "Wink: Recovering from Misbehaviors in Coding Agents",
+        "Operationalizing Ethics for AI Agents: How Developers Encode Values into Repository Context Files",
+        "Accountable Agents in Software Engineering: An Analysis of Terms of Service and a Research Roadmap",
+        "A Dataset of Agentic AI Coding Tool Configurations",
+        "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+        "Model-Assisted and Human-Guided: Perceptions and Practices of Software Professionals Using LLMs for Coding",
+        "The Future of Generative AI in Software Engineering: A Vision from Industry and Academia in the European GENIUS Project"
+      ]
+    },
+    {
+      "variante": "+ termos de agentes (CON) e de teste (TES)",
+      "query_fingerprint": "b50b3a17c05d020cf4d0c7e4620ebde25676235b118e149cbfb682d7f33e3061",
+      "volume_por_familia": {
+        "REQ": 390,
+        "ARQ": 254,
+        "PRJ": 244,
+        "CON": 3472,
+        "TES": 1761,
+        "OPE": 390,
+        "MAN": 1525
+      },
+      "uniao": 6184,
+      "validacao_recuperados": 14,
+      "validacao_no_snapshot": 17,
+      "sensibilidade": 0.824,
+      "nao_recuperados": [
+        "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+        "Model-Assisted and Human-Guided: Perceptions and Practices of Software Professionals Using LLMs for Coding",
+        "The Future of Generative AI in Software Engineering: A Vision from Industry and Academia in the European GENIUS Project"
+      ]
+    },
+    {
+      "variante": "+ família transversal (gestão e governança)",
+      "query_fingerprint": "0d9a75bbb586387d8014a0eecb20604063ebea18c38ca83e847fb63c0c1537fc",
+      "volume_por_familia": {
+        "REQ": 390,
+        "ARQ": 254,
+        "PRJ": 244,
+        "CON": 3472,
+        "TES": 1761,
+        "OPE": 390,
+        "MAN": 1525,
+        "TRV": 236
+      },
+      "uniao": 6305,
+      "validacao_recuperados": 14,
+      "validacao_no_snapshot": 17,
+      "sensibilidade": 0.824,
+      "nao_recuperados": [
+        "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+        "Model-Assisted and Human-Guided: Perceptions and Practices of Software Professionals Using LLMs for Coding",
+        "The Future of Generative AI in Software Engineering: A Vision from Industry and Academia in the European GENIUS Project"
+      ]
+    },
+    {
+      "variante": "+ bloco de prática (sem a transversal)",
+      "query_fingerprint": "f28e359daafb14c81b7629a5798c1ce6c3f54a26a669c4f48efd5541f699e829",
+      "volume_por_familia": {
+        "REQ": 233,
+        "ARQ": 153,
+        "PRJ": 137,
+        "CON": 1447,
+        "TES": 602,
+        "OPE": 209,
+        "MAN": 593
+      },
+      "uniao": 2564,
+      "validacao_recuperados": 10,
+      "validacao_no_snapshot": 17,
+      "sensibilidade": 0.588,
+      "nao_recuperados": [
+        "VISOR: A Vision-Language Model-based Test Oracle for Testing Robots",
+        "Kubernetes Misconfigurations in the Wild: Taxonomy, Evolution, and Automated Repair with Large Language Models",
+        "AgenticFlict: A Large-Scale Dataset of Merge Conflicts in AI Coding Agent Pull Requests on GitHub",
+        "TestMap: Evidence Infrastructure for Foundation-Model-Assisted Test Generation",
+        "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+        "Model-Assisted and Human-Guided: Perceptions and Practices of Software Professionals Using LLMs for Coding",
+        "The Future of Generative AI in Software Engineering: A Vision from Industry and Academia in the European GENIUS Project"
+      ]
+    },
+    {
+      "variante": "+ bloco de prática (com a transversal)",
+      "query_fingerprint": "bfc9848e77e588e68f92ebe703e123e9ca9a7980f5f8bce73bac7665cf6dcc64",
+      "volume_por_familia": {
+        "REQ": 233,
+        "ARQ": 153,
+        "PRJ": 137,
+        "CON": 1447,
+        "TES": 602,
+        "OPE": 209,
+        "MAN": 593,
+        "TRV": 167
+      },
+      "uniao": 2642,
+      "validacao_recuperados": 10,
+      "validacao_no_snapshot": 17,
+      "sensibilidade": 0.588,
+      "nao_recuperados": [
+        "VISOR: A Vision-Language Model-based Test Oracle for Testing Robots",
+        "Kubernetes Misconfigurations in the Wild: Taxonomy, Evolution, and Automated Repair with Large Language Models",
+        "AgenticFlict: A Large-Scale Dataset of Merge Conflicts in AI Coding Agent Pull Requests on GitHub",
+        "TestMap: Evidence Infrastructure for Foundation-Model-Assisted Test Generation",
+        "CHASE: LLM Agents for Dissecting Malicious PyPI Packages",
+        "Model-Assisted and Human-Guided: Perceptions and Practices of Software Professionals Using LLMs for Coding",
+        "The Future of Generative AI in Software Engineering: A Vision from Industry and Academia in the European GENIUS Project"
+      ]
+    }
+  ]
+}
